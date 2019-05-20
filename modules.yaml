@@ -1,0 +1,27 @@
+modules:
+  enable::
+    - lmod
+  lmod:
+    core_compilers:
+      - 'gcc@4.8.5'
+      - 'gcc@4.8.2'
+      - 'gcc@4.8'
+    # hash_length: 0
+    whitelist:
+      - gcc
+    blacklist:
+      - '%gcc@4.8.2'
+      - '%gcc@4.8.5'
+      - '%gcc@4.8'
+    verbose_autoload: false
+    all:
+      autoload: 'direct'
+      suffixes:
+        '+jit': jit
+        '^python@2.7': 'py2.7'
+        '^python@3.6': 'py3.6'
+      environment:
+        set:
+          'SPACK_{name}_ROOT': '{prefix}'
+    ^python:
+      autoload:  'direct'

@@ -1,0 +1,61 @@
+packages:
+  all:
+    compiler: [gcc@8.2.0, gcc@4.8.5, gcc@4.8.3]
+  bamutil:
+    version: [1.0.13]
+  bcftools:
+    version: [1.9]
+  bedops:
+    version: [2.4.35]
+  bedtools2:
+    version: [2.27.1]
+  blast-plus:
+    version: [2.7.1]
+    variants: ~python~perl
+  # bowtie@1.2.2 fails when %gcc@8.2.0
+  bowtie:
+    version: [1.2.1.1]
+  bowtie2:
+    version: [2.3.4.1]
+  bwa:
+    version: [0.7.17]
+  cairo:
+    variants: +X+pdf
+  cdhit:
+    version: [4.6.8]
+  clapack:
+    variants: ~external-blas
+  datamash:
+    version: [1.3]
+  emacs:
+    version: [26.1]
+    variants: +tls
+  emboss:
+    version: [6.6.0]
+  fastx-toolkit:
+    version: [0.0.14]
+  mafft:
+    version: [7.221]
+  muscle:
+    version: [3.8.1551]
+  pango:
+    variants: +X
+  pcre:
+    variants: +jit
+  perl:
+    version: [5.26.2]
+  python:
+    version: [3.6.5]
+  r:
+    version: [3.5.1]
+    variants: +X
+  samtools:
+    version: [1.9]
+  seqtk:
+    version: [1.2]
+  spades:
+    version: [3.13.0]
+  star:
+    version: [2.5.3a]
+  tabix:
+    version: ["2013-12-16"]
