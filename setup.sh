@@ -56,13 +56,13 @@ wget -O ${THIS_DIR}/get-pip.py https://bootstrap.pypa.io/get-pip.py
 echo "-------------- Setting up pip/pipenv for Python2 --------------"
 module purge
 PYTHON2_MOD_NAME=$(module spider python/2.7.15 2>&1 | sed -n '\|python: |s|.*\(python/2.7.15-.*\)|\1|p')
-module load gcc ${PYTHON2_MOD_NAME}
+module load ${PYTHON2_MOD_NAME}
 python get-pip.py
 pip install pipenv
 
 echo "-------------- Setting up pip/pipenv for Python3 --------------"
 module purge
 PYTHON3_MOD_NAME=$(module spider python/3.6.5 2>&1 | sed -n '\|python: |s|.*\(python/3.6.5-.*\)|\1|p')
-module load gcc ${PYTHON3_MOD_NAME}
+module load ${PYTHON3_MOD_NAME}
 python get-pip.py
 pip install pipenv

@@ -55,7 +55,7 @@ if [[ -z ${_INIT_LMOD:-} ]]; then
     export BASH_ENV=${_APPS_LMOD_INIT_DIR}/bash
     source ${BASH_ENV}                     # load the init file into this shell
     module use ${_APPS_LMOD_CORE_DIR}      # hook up the Core modules directory
-    module load ${APPS_CORE_COMPILER}
+#    module load ${APPS_CORE_COMPILER}
     module load ${APPS_MODULES}
 else                                   # otherwise just refresh things
     source ${BASH_ENV}
