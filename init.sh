@@ -62,3 +62,13 @@ else                                   # otherwise just refresh things
     module refresh
 fi
 # end of apps tree setup bits
+
+echo -e "
+* Spack tree initialized using these env vars:
+  APPS_DIR=${APPS_DIR}
+  APPS_MODULES=${APPS_MODULES}
+
+* You can export these env vars prior to sourcing this script for more control over your environment.
+
+* Type module avail to see a list of available packages.
+"
