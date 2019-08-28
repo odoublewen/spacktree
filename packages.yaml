@@ -10,7 +10,7 @@ packages:
   bedtools2:
     version: [2.27.1]
   blast-plus:
-    version: [2.7.1]
+    version: [2.9.0]
     variants: ~python~perl
   # bowtie@1.2.2 fails when %gcc@8.2.0
   bowtie:

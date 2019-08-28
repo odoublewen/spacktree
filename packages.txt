@@ -17,13 +17,13 @@
 # lzma
 # lz4
 # lzo
-## Packages pinned in package.yaml (inside install-packages.sh)
-## (for cases where two versions are listed, the first one is the one pinned in install-packages.sh)
+## Packages pinned in packages.yaml (for cases where two versions are listed, the first one is the one pinned in packages.yaml)
 bamutil@1.0.13
 bcftools@1.9
 bcftools@1.8
 bedops@2.4.35
 bedtools2@2.27.1
+blast-plus@2.9.0
 blast-plus@2.7.1
 bowtie@1.2.1.1
 bowtie2@2.3.4.1
