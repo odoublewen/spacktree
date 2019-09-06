@@ -34,6 +34,7 @@ emacs@26.1
 emboss@6.6.0
 fastx-toolkit@0.0.14
 mafft@7.221
+#py-multiqc@1.7
 muscle@3.8.1551
 perl@5.26.2
 python@3.6.5
@@ -45,13 +46,18 @@ spades@3.13.0
 star@2.5.3a
 star@2.7.0e
 tabix@2013-12-16
+trimmomatic@0.38
+fqtrim@0.9.7
+trimgalore@0.6.1
+py-cutadapt@2.5
+py-atropos@1.1.22
 ## non pinned packages (we want the shiny new one :)
 bc
 byobu
 direnv
 entrezdirect
 git
-git-lfs
+#git-lfs
 htop
 httpie
 hugo
