@@ -34,7 +34,9 @@
 #   APPS_CORE_COMPILER - Compiler choice for lmod hierarch. scheme
 #
 
-APPS_DIR=/opt/spack/current
+if [[ -z ${APPS_DIR:-} ]]; then
+    APPS_DIR=/opt/spack/current
+fi
 _APPS_SPACK_EXE=${APPS_DIR}/bin/spack
 _APPS_LMOD_INIT_DIR=$(${_APPS_SPACK_EXE} location -i lmod)/lmod/lmod/init
 _APPS_LMOD_CORE_DIR=${APPS_DIR}/share/spack/lmod/linux-centos6-x86_64/gcc/8.2.0
