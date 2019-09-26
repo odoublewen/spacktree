@@ -18,12 +18,14 @@ echo "THIS_DIR=${THIS_DIR}"
 echo "APPS_DIR=${APPS_DIR}"
 echo "SPACK=${SPACK}"
 
-echo "-------------- Making fresh clone of spack --------------"
+echo "-------------- Check or make clone of spack --------------"
 if [[ -d ${APPS_DIR} ]]; then
     echo "${APPS_DIR} already exists; skipping clone"
 else
     git clone https://github.com/spack/spack.git ${APPS_DIR}
 fi
+SPACK_COMMIT="$(cd ${APPS_DIR}; git rev-parse HEAD)"
+echo "Current spack commit (HEAD): ${SPACK_COMMIT}"
 
 echo "-------------- Installing our packages --------------"
 export SPACK_ROOT=$(${SPACK} location -r)
