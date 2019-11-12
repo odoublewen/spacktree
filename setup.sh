@@ -9,22 +9,22 @@ fi
 echo "-------------- Setting paths --------------"
 THIS_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
 if [ "$#" -eq 1 ]; then
-    APPS_DIR=$(readlink -f $1)
+    SPACK_DIR=$(readlink -f $1)
 else
-    APPS_DIR=${THIS_DIR}/spack
+    SPACK_DIR=${THIS_DIR}/spack
 fi
-SPACK=${APPS_DIR}/bin/spack
+SPACK=${SPACK_DIR}/bin/spack
 echo "THIS_DIR=${THIS_DIR}"
-echo "APPS_DIR=${APPS_DIR}"
+echo "SPACK_DIR=${SPACK_DIR}"
 echo "SPACK=${SPACK}"
 
 echo "-------------- Check or make clone of spack --------------"
-if [[ -d ${APPS_DIR} ]]; then
-    echo "${APPS_DIR} already exists; skipping clone"
+if [[ -d ${SPACK_DIR} ]]; then
+    echo "${SPACK_DIR} already exists; skipping clone"
 else
-    git clone https://github.com/spack/spack.git ${APPS_DIR}
+    git clone https://github.com/spack/spack.git ${SPACK_DIR}
 fi
-SPACK_COMMIT="$(cd ${APPS_DIR}; git rev-parse HEAD)"
+SPACK_COMMIT="$(cd ${SPACK_DIR}; git rev-parse HEAD)"
 echo "Current spack commit (HEAD): ${SPACK_COMMIT}"
 
 echo "-------------- Installing our packages --------------"

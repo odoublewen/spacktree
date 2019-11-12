@@ -27,19 +27,21 @@
 #   APPS_MODULES - your list of modules to load
 #      e.g. APPS_MODULES="emacs git htop etc etc etc..."
 # Less common:
-#   APPS_DIR - path to top of a Spack apps tree, e.g. a team specific tree
+#   SPACK_DIR - path to top of a Spack apps tree, e.g. a team specific tree
 #              (must include lmod)
 #   APPS_SPECIAL_MODULES_DIR - path to dir of snowflake modulefiles
 # Uncommon:
 #   APPS_CORE_COMPILER - Compiler choice for lmod hierarch. scheme
 #
 
-if [[ -z ${APPS_DIR:-} ]]; then
-    APPS_DIR=/opt/spack/current
+THIS_DIR="$(cd "$(dirname "$BASH_SOURCE")"; pwd)" 
+
+if [[ -z ${SPACK_DIR:-} ]]; then
+    SPACK_DIR=${THIS_DIR}/spack
 fi
-_APPS_SPACK_EXE=${APPS_DIR}/bin/spack
+_APPS_SPACK_EXE=${SPACK_DIR}/bin/spack
 _APPS_LMOD_INIT_DIR=$(${_APPS_SPACK_EXE} location -i lmod)/lmod/lmod/init
-_APPS_LMOD_CORE_DIR=${APPS_DIR}/share/spack/lmod/linux-centos6-x86_64/gcc/8.2.0
+_APPS_LMOD_CORE_DIR=${SPACK_DIR}/share/spack/lmod/linux-centos6-x86_64/gcc/8.2.0
 
 # modules to load, core compiler will determine what's available
 APPS_CORE_COMPILER=${APPS_CORE_COMPILER:-gcc}
@@ -67,7 +69,7 @@ fi
 
 echo -e "
 * Spack tree initialized using these env vars:
-  APPS_DIR=${APPS_DIR}
+  SPACK_DIR=${SPACK_DIR}
   APPS_MODULES=${APPS_MODULES}
 
 * You can export these env vars prior to sourcing this script for more control over your environment.
