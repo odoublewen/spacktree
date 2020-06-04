@@ -1,2 +1,2 @@
 mirrors:
-  local: file:///raid/software/spack/mirror
+  local: file:///raid/var/cache/spackmirror

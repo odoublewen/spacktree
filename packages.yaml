@@ -12,11 +12,10 @@ packages:
   blast-plus:
     version: [2.9.0]
     variants: ~python~perl
-  # bowtie@1.2.2 fails when %gcc@8.2.0
   bowtie:
-    version: [1.2.1.1]
+    version: [1.2.3]
   bowtie2:
-    version: [2.3.4.1]
+    version: [2.3.5.1]
   bwa:
     version: [0.7.17]
   cairo:
@@ -45,17 +44,17 @@ packages:
   perl:
     version: [5.26.2]
   python:
-    version: [3.7.4]
+    version: [3.8.2]
   r:
-    version: [3.5.1]
+    version: [3.6.3]
     variants: +X
   samtools:
-    version: [1.9]
+    version: [1.10]
   seqtk:
-    version: [1.2]
+    version: [1.3]
   spades:
     version: [3.13.0]
   star:
-    version: [2.5.3a]
+    version: [2.7.0e]
   tabix:
     version: ["2013-12-16"]

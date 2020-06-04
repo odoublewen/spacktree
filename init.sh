@@ -4,7 +4,7 @@
 #
 # The typical user's .bash_profile would include:
 #
-# APPS_MODULES="emacs git htop"
+# APPS_MODULES="htop"
 # source /path/to/this/init.sh
 #
 # Even setting APPS_MODULES is optional if user is ok with default list...
@@ -25,7 +25,7 @@
 # There are a few things that users can customize:
 # Common:
 #   APPS_MODULES - your list of modules to load
-#      e.g. APPS_MODULES="emacs git htop etc etc etc..."
+#      e.g. APPS_MODULES="git htop etc etc etc..."
 # Less common:
 #   SPACK_DIR - path to top of a Spack apps tree, e.g. a team specific tree
 #              (must include lmod)
@@ -37,15 +37,19 @@
 THIS_DIR="$(cd "$(dirname "$BASH_SOURCE")"; pwd)" 
 
 if [[ -z ${SPACK_DIR:-} ]]; then
-    SPACK_DIR=${THIS_DIR}/spack
+    SPACK_DIR=${THIS_DIR}/spack-current
 fi
 _APPS_SPACK_EXE=${SPACK_DIR}/bin/spack
 _APPS_LMOD_INIT_DIR=$(${_APPS_SPACK_EXE} location -i lmod)/lmod/lmod/init
-_APPS_LMOD_CORE_DIR=${SPACK_DIR}/share/spack/lmod/linux-centos6-x86_64/gcc/8.2.0
-
+_APPS_LMOD_CORE_DIR=${SPACK_DIR}/share/spack/lmod/linux-centos8-x86_64/gcc/8.3.1
 # modules to load, core compiler will determine what's available
-APPS_CORE_COMPILER=${APPS_CORE_COMPILER:-gcc}
-APPS_MODULES=${APPS_MODULES:-"emacs git htop the-silver-searcher tree vim"}
+####APPS_CORE_COMPILER=${APPS_CORE_COMPILER:-gcc}
+APPS_MODULES=${APPS_MODULES:-"tree the-silver-searcher"}
+
+#echo _APPS_LMOD_INIT_DIR $_APPS_LMOD_INIT_DIR
+#echo _APPS_LMOD_CORE_DIR $_APPS_LMOD_CORE_DIR
+#####echo APPS_CORE_COMPILER $APPS_CORE_COMPILER
+#echo APPS_MODULES $APPS_MODULES
 
 # set up an empty MANPATH, so that when lmod adds to it we can still
 # access the system man pages.
@@ -59,18 +63,18 @@ if [[ -z ${_INIT_LMOD:-} ]]; then
     export BASH_ENV=${_APPS_LMOD_INIT_DIR}/bash
     source ${BASH_ENV}                     # load the init file into this shell
     module use ${_APPS_LMOD_CORE_DIR}      # hook up the Core modules directory
-#    module load ${APPS_CORE_COMPILER}
+####    module load ${APPS_CORE_COMPILER}
     module load ${APPS_MODULES}
 else                                   # otherwise just refresh things
     source ${BASH_ENV}
     module refresh
 fi
-# end of apps tree setup bits
+
 
 echo -e "
 * Spack tree initialized using these env vars:
   SPACK_DIR=${SPACK_DIR}
-  APPS_MODULES=${APPS_MODULES}
+  APPS_MODULES=\"${APPS_MODULES}\"
 
 * You can export these env vars prior to sourcing this script for more control over your environment.
 

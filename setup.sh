@@ -34,11 +34,11 @@ export SPACK_ROOT=$(${SPACK} location -r)
 cp packages.yaml modules.yaml mirrors.yaml ${SPACK_ROOT}/etc/spack/
 
 # build our compiler
-my_compiler=gcc@8.2.0
-if ! ${SPACK} location -i ${my_compiler} > /dev/null 2>&1; then
-    ${SPACK} install ${my_compiler}
-    ${SPACK} compiler add --scope site $(${SPACK} location -i ${my_compiler})
-fi
+#my_compiler=gcc@8.2.0
+#if ! ${SPACK} location -i ${my_compiler} > /dev/null 2>&1; then
+#    ${SPACK} install ${my_compiler}
+#    ${SPACK} compiler add --scope site $(${SPACK} location -i ${my_compiler})
+#fi
 
 # build packages
 for package in $(grep -o '^[^#]*' packages.txt); do
@@ -47,7 +47,14 @@ for package in $(grep -o '^[^#]*' packages.txt); do
 done
 
 # copy any new tar.gz files into the mirror, using checksums to determine newness
-rsync -rvc ${SPACK_ROOT}/var/spack/cache/ /raid/software/spack/mirror/
+rsync -rvc ${SPACK_ROOT}/var/spack/cache/ /raid/var/cache/spackmirror/
+
+exit
+
+module load r openmpi openblas cairo freeglut gtkplus xfs libxt libxml2 libgit2 curl openssl glpk fftw jags mariadb mesa lzma lz4 lzo
+cd r
+Rscript setup-renv.R
+
 
 echo "-------------- Activating the new spack env --------------"
 source ${THIS_DIR}/init.sh
