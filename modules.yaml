@@ -3,11 +3,7 @@ modules:
     - lmod
   lmod:
     core_compilers:
-#      - 'gcc@4.8.5'
-#      - 'gcc@4.8.2'
-#      - 'gcc@4.8'
-      - 'gcc@8.3'
-    # hash_length: 0
+      - 'gcc@8.4'
     whitelist:
       - gcc
 #    blacklist:

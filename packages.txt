@@ -18,41 +18,31 @@ lzma
 lz4
 lzo
 ## Packages pinned in packages.yaml (for cases where two versions are listed, the first one is the one pinned in packages.yaml)
-bamutil@1.0.13
-bcftools@1.9
-bedops@2.4.35
-bedtools2@2.27.1
+bcftools@1.10.2
+bedtools2@2.29.2
 blast-plus@2.9.0
-bowtie2@2.3.4.1
+bowtie2@2.4.2
 bwa@0.7.17
-cdhit@4.6.8
-datamash@1.3
-#emacs@26.3
 emboss@6.6.0
 fastx-toolkit@0.0.14
-mafft@7.221
-#py-multiqc@1.7
-muscle@3.8.1551
-perl@5.26.2
 picard@2.20.8
-python@3.8.2
+python@3.8.6
 python@2.7.18
-r@3.6.3
+r@4.0.3
 samtools@1.10
 seqtk@1.3
-star@2.7.0e
+star@2.7.6a
 tabix@2013-12-16
-trimmomatic@0.38
+trimmomatic@0.39
 fqtrim@0.9.7
-trimgalore@0.6.1
-py-cutadapt@2.5
+trimgalore@0.6.6
+py-cutadapt@2.10
 py-atropos@1.1.22
 ## non pinned packages (we want the shiny new one :)
 bc
 direnv
 entrezdirect
 git
-#git-lfs
 htop
 httpie
 hugo
@@ -63,9 +53,4 @@ sratoolkit
 the-silver-searcher
 tree
 htop
-# special cases, complicated dependency trees, and 
-# workaround bug for java virt dependency resolution (https://github.com/spack/spack/issues/10027)
-#picard@2.18.3^jdk@1.8.0_141-b15
-#r^jdk@1.8.0_141-b15
-#rsem^jdk@1.8.0_141-b15
-#trinity@2.6.6^jdk@1.8.0_141-b15  # trinity has an awful dependency tree.  we will install if needed.
+byobu
