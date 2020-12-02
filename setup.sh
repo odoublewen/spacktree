@@ -30,7 +30,7 @@ echo "-------------- Check or make clone of spack --------------"
 if [[ -d ${SPACK_DIR} ]]; then
     echo "${SPACK_DIR} already exists; skipping clone"
 else
-    git clone https://github.com/spack/spack.git ${SPACK_DIR}
+    git clone --depth 1 https://github.com/spack/spack.git ${SPACK_DIR}
 fi
 SPACK_COMMIT="$(cd ${SPACK_DIR}; git rev-parse HEAD)"
 echo "Current spack commit (HEAD): ${SPACK_COMMIT}"
@@ -44,14 +44,15 @@ cp packages.yaml modules.yaml mirrors.yaml ${SPACK_ROOT}/etc/spack/
 # build our compiler
 my_compiler=gcc@8.4.0
 if ! ${SPACK} location -i ${my_compiler} > /dev/null 2>&1; then
-    ${SPACK} install ${my_compiler}
+    ${SPACK} compiler find
+    ${SPACK} install --fail-fast ${my_compiler}
     ${SPACK} compiler add --scope site $(${SPACK} location -i ${my_compiler})
 fi
 
 # build packages
 for package in $(grep -o '^[^#]*' packages.txt); do
     echo ">>> Working on ${package}..."
-    ${SPACK} install ${package}
+    ${SPACK} install --fail-fast ${package}
 done
 
 if [[ ! -z ${SPACK_MIRROR:-} && -d ${SPACK_MIRROR:-} ]]; then
