@@ -39,7 +39,10 @@ echo "-------------- Installing our packages --------------"
 export SPACK_ROOT=$(${SPACK} location -r)
 
 # copy custom config files to spack
-cp packages.yaml modules.yaml mirrors.yaml ${SPACK_ROOT}/etc/spack/
+cp packages.yaml modules.yaml ${SPACK_ROOT}/etc/spack/
+if [[ -f mirrors.yaml ]]; then
+    cp mirrors.yaml ${SPACK_ROOT}/etc/spack/
+fi
 
 # build our compiler
 my_compiler=gcc@8.4.0
