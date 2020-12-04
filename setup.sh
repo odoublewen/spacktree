@@ -61,7 +61,7 @@ done
 if [[ ! -z ${SPACK_MIRROR:-} && -d ${SPACK_MIRROR:-} ]]; then
     # copy any new tar.gz files into the mirror, using checksums to determine newness
     rsync -rvc ${SPACK_ROOT}/var/spack/cache/ ${SPACK_MIRROR}
-exit
+fi
 
 
 # echo "-------------- Activating the new spack env --------------"
