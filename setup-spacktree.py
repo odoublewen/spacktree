@@ -101,12 +101,8 @@ def setup_spacktree(spack_root, gcc_version, spack_mirror):
         logging.info(f'Directory {spack_root_abs} exists, skipping download')
     else:
         makedirs(path.dirname(spack_root_abs), exist_ok=True)
-        logging.info('Downloading Spack')
-        filepath, result = urllib.request.urlretrieve("https://github.com/spack/spack/archive/develop.zip")
-        logging.info('Unzipping Spack')
-        with zipfile.ZipFile(filepath, 'r') as zip_ref, tempfile.TemporaryDirectory() as tmp_dir:
-            zip_ref.extractall(tmp_dir)
-            rename(path.join(tmp_dir, 'spack-develop'), spack_root_abs)
+        logging.info('Cloning Spack')
+        subprocess.check_call(['git', 'clone', '--depth', '1', 'https://github.com/spack/spack.git', spack_root_abs])
 
     if spack_mirror is not None:
         logging.info('Configuring local Spack mirror')
