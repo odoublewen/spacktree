@@ -54,3 +54,4 @@ the-silver-searcher
 tree
 htop
 byobu
+emacs+tls
