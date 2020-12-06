@@ -1,5 +1,6 @@
-#!/usr/bin/env python3
+#!/usr/bin/env python
 
+from __future__ import print_function
 import logging
 import argparse
 from os import path, makedirs, rename
@@ -8,6 +9,7 @@ import urllib.request
 import zipfile
 import tempfile
 import sys
+import glob
 
 LOGGING_FORMAT = '==== SPACKTREE ===> %(message)s'
 
@@ -125,11 +127,11 @@ def setup_spacktree(spack_root, gcc_version, spack_mirror):
         subprocess.check_call([sys.executable, spack_exe, 'location', '-i', gcc_string])
     except subprocess.CalledProcessError:
         pass
-        # logging.info(f'Building compiler {gcc_string}')
-        # subprocess.check_call([sys.executable, spack_exe, 'compiler', 'find'])
-        # subprocess.check_call([sys.executable, spack_exe, 'install', '--fast-fail', gcc_string])
-        # gcc_location, ret = subprocess.check_output([sys.executable, spack_exe, 'location', '-i', gcc_string], universal_newlines=True).strip()
-        # subprocess.check_call([sys.executable, spack_exe, 'compiler', 'add', '--scope', 'site', gcc_location])
+        logging.info(f'Building compiler {gcc_string}')
+        subprocess.check_call([sys.executable, spack_exe, 'compiler', 'find'])
+        subprocess.check_call([sys.executable, spack_exe, 'install', '--fail-fast', gcc_string])
+        gcc_location, ret = subprocess.check_output([sys.executable, spack_exe, 'location', '-i', gcc_string], universal_newlines=True).strip()
+        subprocess.check_call([sys.executable, spack_exe, 'compiler', 'add', '--scope', 'site', gcc_location])
 
     with open(path.join(SPACKTREE_DIR, 'packages.txt'), 'r') as fh:
         for line in fh.read().splitlines():
@@ -137,9 +139,10 @@ def setup_spacktree(spack_root, gcc_version, spack_mirror):
                 continue
             package_str = line.split()[0]
             logging.info(f'Installing {package_str}')
-            # subprocess.check_call([sys.executable, spack_exe, 'install', '--fast-fail', package_str])
+            subprocess.check_call([sys.executable, spack_exe, 'install', '--fail-fast', package_str])
 
     logging.info(f'Configuring activate.sh script')
+    glob.glob(path.join(spack_root_abs, 'share/spack/lmod/**/Core'))
     # SPACK_LMOD_CORE_DIR=$(find spack/share/spack/lmod -name Core)
     # SPACK_LMOD_MODULES_DIR=$(dirname ${SPACK_LMOD_CORE_DIR})/gcc/${SPACK_GCC_VERSION}    #### PREPOPULATE THIS
     # SPACK_LMOD_INIT_DIR=$(${SPACK_EXE} location -i lmod)/lmod/lmod/init      ######### POPULATE THIS
