@@ -122,11 +122,11 @@ def setup_spacktree(spack_root, gcc_version, spack_mirror):
     try:
         subprocess.check_call([sys.executable, spack_exe, 'location', '-i', gcc_string])
     except subprocess.CalledProcessError:
-        pass
         logging.info(f'Building compiler {gcc_string}')
         subprocess.check_call([sys.executable, spack_exe, 'compiler', 'find'])
         subprocess.check_call([sys.executable, spack_exe, 'install', '--fail-fast', gcc_string])
         gcc_location, ret = subprocess.check_output([sys.executable, spack_exe, 'location', '-i', gcc_string], universal_newlines=True).strip()
+        logging.info(f'Built compiler {gcc_string} at {gcc_location}')
         subprocess.check_call([sys.executable, spack_exe, 'compiler', 'add', '--scope', 'site', gcc_location])
 
     with open(path.join(SPACKTREE_DIR, 'packages.txt'), 'r') as fh:
