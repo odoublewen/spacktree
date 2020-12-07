@@ -2,21 +2,21 @@
 set -euo pipefail
 
 if [[ $(type -t module) == "function" ]]; then
-  echo "This wrapper script should only be run in a module-naive shell"
+  echo "SPACKTREE: This wrapper script should only be run in a module-naive shell"
   exit 1
 fi
 
-echo "-------------- Setting paths --------------"
+echo "SPACKTREE: Setting paths"
 THIS_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" >/dev/null 2>&1 && pwd)"
 if [ "$#" -eq 1 ]; then
   SPACK_DIR=$(readlink -f $1)
 else
   SPACK_DIR=${THIS_DIR}/spack
 fi
-SPACK=${SPACK_DIR}/bin/spack
+SPACK_EXE=${SPACK_DIR}/bin/spack
 echo "THIS_DIR=${THIS_DIR}"
 echo "SPACK_DIR=${SPACK_DIR}"
-echo "SPACK=${SPACK}"
+echo "SPACK=${SPACK_EXE}"
 
 echo "-------------- Check or make clone of spack --------------"
 if [[ -d ${SPACK_DIR} ]]; then
@@ -27,7 +27,7 @@ fi
 SPACK_COMMIT=$(cd "${SPACK_DIR}" &&  git rev-parse HEAD)
 echo "Current spack commit (HEAD): ${SPACK_COMMIT}"
 
-SPACK_ROOT=$(${SPACK} location -r)
+SPACK_ROOT=$(${SPACK_EXE} location -r)
 export SPACK_ROOT
 
 echo "-------------- Configuring spack --------------"
@@ -46,7 +46,7 @@ fi
 
 echo "-------------- Installing packages --------------"
 
-${SPACK} compiler find
+${SPACK_EXE} compiler find
 
 # build packages
 while read -r line; do
@@ -61,12 +61,12 @@ while read -r line; do
   echo ">>> Working on ${package}"
   if [[ ${package:0:4} == "gcc@" ]]; then
     IFS="@" read -r -a GCC_VERSION <<< "$package"
-    if ! ${SPACK} location -i ${package} >/dev/null 2>&1; then
-      ${SPACK} install --fail-fast "${package}"
-      ${SPACK} compiler add --scope site "$(${SPACK} location -i ${package})"
+    if ! ${SPACK_EXE} location -i ${package} >/dev/null 2>&1; then
+      ${SPACK_EXE} install --fail-fast "${package}"
+      ${SPACK_EXE} compiler add --scope site "$(${SPACK_EXE} location -i ${package})"
     fi
   else
-    ${SPACK} install --fail-fast "${package}"
+    ${SPACK_EXE} install --fail-fast "${package}"
   fi
 done < packages.txt
 
@@ -78,7 +78,7 @@ fi
 
 SPACK_LMOD_CORE_DIR=$(find "$SPACK_ROOT/share/spack/lmod" -name Core)
 SPACK_LMOD_MODULES_DIR=$(dirname "${SPACK_LMOD_CORE_DIR}")"/gcc/${GCC_VERSION[1]}"
-SPACK_LMOD_BASH_INIT=$(${SPACK} location -i lmod)/lmod/lmod/init/bash
+SPACK_LMOD_BASH_INIT=$(${SPACK_EXE} location -i lmod)/lmod/lmod/init/bash
 
 #export SPACK_LMOD_MODULES_DIR
 #export SPACK_LMOD_BASH_INIT
@@ -92,27 +92,25 @@ if [[ -z \${MANPATH:-} ]]; then
     export MANPATH=":"
 fi
 
-# set up modules
-if [[ -z \${_INIT_LMOD:-} ]]; then             # only do the full setup first time through
+# set up modules -  only do the full setup first time through
+if [[ -z \${_INIT_LMOD:-} ]]; then
     export _INIT_LMOD=1
-    source ${SPACK_LMOD_BASH_INIT}            # load the init file into this shell
-    module use ${SPACK_LMOD_MODULES_DIR}      # hook up the Core modules directory
-####    module load \${APPS_CORE_COMPILER}
-    module load \${SPACK_AUTOLOAD_MODULES}
-
-else                                          # otherwise just refresh things
+    source ${SPACK_LMOD_BASH_INIT}
+    module use ${SPACK_LMOD_MODULES_DIR}
+    if [[ -z \${SPACK_AUTOLOAD_MODULES:-} ]]; then
+        module load \${SPACK_AUTOLOAD_MODULES}
+    fi
+else
     source ${SPACK_LMOD_BASH_INIT}
     module refresh
 fi
 
 # friendly message
 echo -e "
-* Spack tree initialized using these env vars:
-  SPACK_AUTOLOAD_MODULES=\"\${SPACK_AUTOLOAD_MODULES}\"
-
-* You can export these env vars prior to sourcing this script for more control over your environment.
-
-* Type module avail to see a list of available packages.
+* Spack env modules activated.
+* Type `module avail` to see a list of available packages.
+* You can set the env var SPACK_AUTOLOAD_MODULES before sourcing activate.sh
+  e.g. export SPACK_AUTOLOAD_MODULES=\"tree git jq parallel\"
 "
 EOF
 
