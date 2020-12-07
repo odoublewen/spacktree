@@ -1,0 +1,57 @@
+## Things we need to build R packages outside of the Spack tree
+#openblas
+#cairo
+#####freeglut  '-DOPENGL_gl_LIBRARY=' + self.spec['gl'].libs[0],  error index out of range
+#gtkplus
+#xfs
+#libxt
+#libxml2
+#libgit2
+#curl
+#openssl
+#glpk
+#fftw
+#jags
+#mariadb
+#mesa
+#lzma
+#lz4
+#lzo
+## Packages pinned in packages.yaml (for cases where two versions are listed, the first one is the one pinned in packages.yaml)
+bcftools@1.10.2
+bedtools2@2.29.2
+#blast-plus@2.9.0  No rule to make target `/tmp/osolberg/spack-stage/spack-stage-blast-plus-2.9.0-lpyhy3ibkuyr4fau3sh5c3htte3cvvqv/spack-src/c++/ReleaseMT/status/Boost.Test.Included.enabled', needed by `requirements'.  Stop.
+bowtie2@2.4.2
+bwa@0.7.17
+emboss@6.6.0
+fastx-toolkit@0.0.14
+picard@2.20.8
+python@3.8.6
+python@2.7.18
+#r@4.0.3
+samtools@1.10
+seqtk@1.3
+star@2.7.6a
+tabix@2013-12-16
+trimmomatic@0.39
+fqtrim@0.9.7
+trimgalore@0.6.6
+py-cutadapt@2.10
+py-atropos@1.1.22
+## non pinned packages (we want the shiny new one :)
+bc
+direnv
+entrezdirect
+git
+htop
+httpie
+hugo
+jq
+lmod
+parallel
+sratoolkit
+the-silver-searcher
+tree
+htop
+byobu
+emacs+tls

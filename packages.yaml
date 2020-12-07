@@ -1,0 +1,13 @@
+packages:
+  all:
+    compiler: [gcc@8.4.0]
+  cairo:
+    variants: -X+pdf
+  clapack:
+    variants: ~external-blas
+  pcre:
+    variants: +jit
+  perl:
+    version: [5.32.0]
+  python:
+    version: [3.8.6]
