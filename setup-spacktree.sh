@@ -49,28 +49,25 @@ echo "-------------- Installing packages --------------"
 ${SPACK} compiler find
 
 # build packages
-while read -r line || [[ -n line ]]; do
-  IFS=" " read -r -a linearray <<< "$line"
-#  linearray=(${line})
+while read -r line; do
+#  IFS=" " read -r -a linearray <<< "$line"
+  linearray=(${line})
   package=${linearray[0]}
 
   if [[ ${package:0:1} == "#" ]]; then
     continue
   fi
 
-  echo ">>> Working on ${package}..."
+  echo ">>> Working on ${package}"
   if [[ ${package:0:4} == "gcc@" ]]; then
     IFS="@" read -r -a GCC_VERSION <<< "$package"
-
-
     if ! ${SPACK} location -i ${package} >/dev/null 2>&1; then
       ${SPACK} install --fail-fast "${package}"
       ${SPACK} compiler add --scope site "$(${SPACK} location -i ${package})"
     fi
+  else
+    ${SPACK} install --fail-fast "${package}"
   fi
-
-  ${SPACK} install --fail-fast "${package}"
-
 done < packages.txt
 
 if [[ ! -z ${SPACK_MIRROR:-} && -d ${SPACK_MIRROR:-} ]]; then
@@ -80,26 +77,29 @@ fi
 
 
 SPACK_LMOD_CORE_DIR=$(find "$SPACK_ROOT/share/spack/lmod" -name Core)
-SPACK_LMOD_MODULES_DIR=$(dirname "${SPACK_LMOD_CORE_DIR})/gcc/${GCC_VERSION[1]}")
-SPACK_LMOD_BASH_INIT=$(${SPACK_EXE} location -i lmod)/lmod/lmod/init/bash
+SPACK_LMOD_MODULES_DIR=$(dirname "${SPACK_LMOD_CORE_DIR}")"/gcc/${GCC_VERSION[1]}"
+SPACK_LMOD_BASH_INIT=$(${SPACK} location -i lmod)/lmod/lmod/init/bash
 
+#export SPACK_LMOD_MODULES_DIR
+#export SPACK_LMOD_BASH_INIT
 
 cat >"${THIS_DIR}/activate.sh" <<EOF
 # set default modules to load, if SPACK_AUTOLOAD_MODULES is unset
 SPACK_AUTOLOAD_MODULES=\${SPACK_AUTOLOAD_MODULES:-"tree jq parallel the-silver-searcher"}
 
 # set up an empty MANPATH, so that when lmod adds to it we can still access the system man pages.
-if [[ -z ${MANPATH:-} ]]; then
+if [[ -z \${MANPATH:-} ]]; then
     export MANPATH=":"
 fi
 
 # set up modules
-if [[ -z ${_INIT_LMOD:-} ]]; then             # only do the full setup first time through
+if [[ -z \${_INIT_LMOD:-} ]]; then             # only do the full setup first time through
     export _INIT_LMOD=1
     source ${SPACK_LMOD_BASH_INIT}            # load the init file into this shell
     module use ${SPACK_LMOD_MODULES_DIR}      # hook up the Core modules directory
-####    module load ${{APPS_CORE_COMPILER}}
+####    module load \${APPS_CORE_COMPILER}
     module load \${SPACK_AUTOLOAD_MODULES}
+
 else                                          # otherwise just refresh things
     source ${SPACK_LMOD_BASH_INIT}
     module refresh
@@ -108,7 +108,7 @@ fi
 # friendly message
 echo -e "
 * Spack tree initialized using these env vars:
-  SPACK_AUTOLOAD_MODULES=\"${SPACK_AUTOLOAD_MODULES}\"
+  SPACK_AUTOLOAD_MODULES=\"\${SPACK_AUTOLOAD_MODULES}\"
 
 * You can export these env vars prior to sourcing this script for more control over your environment.
 
