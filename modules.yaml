@@ -3,13 +3,13 @@ modules:
     - lmod
   lmod:
     core_compilers:
-      - 'gcc@8.4.0'
+      - 'gcc@8.4'
     whitelist:
       - gcc
-#    blacklist:
-#      - '%gcc@4.8.2'
-#      - '%gcc@4.8.5'
-#      - '%gcc@4.8'
+    blacklist:
+      - '%gcc@4.8.2'
+      - '%gcc@4.8.5'
+      - '%gcc@4.8'
     verbose_autoload: false
     all:
       autoload: 'direct'
