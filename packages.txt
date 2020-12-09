@@ -20,7 +20,7 @@ lzo
 ## Bioinformatics packages (version pinned)
 bcftools@1.10.2
 bedtools2@2.29.2
-blast-plus@2.11.0
+blast-plus@2.11.0~gnutls
 bowtie2@2.4.2
 bwa@0.7.17
 emboss@6.6.0
