@@ -27,8 +27,10 @@ bwa@0.7.17
 emboss@6.6.0
 fastx-toolkit@0.0.14
 picard@2.20.8
+python@3.9.1
 python@3.8.6
 python@3.7.9
+python@3.6.12
 python@2.7.18
 r@4.0.3
 samtools@1.10

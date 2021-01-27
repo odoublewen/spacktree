@@ -81,7 +81,7 @@ SPACK_LMOD_MODULES_DIR=$(dirname "${SPACK_LMOD_CORE_DIR}")"/gcc/${GCC_VERSION[1]
 SPACK_LMOD_BASH_INIT=$(${SPACK_EXE} location -i lmod)/lmod/lmod/init/bash
 
 
-echo "SPACKTREE: Writing activation script: ${package}"
+echo "SPACKTREE: Writing activation script"
 cat >"${THIS_DIR}/activate.sh" <<EOF
 # if MANPATH var is unset, initialize it so that when lmod adds to it,
 # we can still access the system man pages.
