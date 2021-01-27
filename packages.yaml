@@ -11,3 +11,5 @@ packages:
     version: [5.32.0]
   python:
     version: [3.8.6]
+  openblas:
+    version: [0.3.13]
