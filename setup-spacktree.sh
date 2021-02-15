@@ -76,8 +76,7 @@ if [[ ! -z ${SPACK_MIRROR:-} && -d ${SPACK_MIRROR:-} ]]; then
 fi
 
 
-SPACK_LMOD_CORE_DIR=$(find "$SPACK_ROOT/share/spack/lmod" -name Core)
-SPACK_LMOD_MODULES_DIR=$(dirname "${SPACK_LMOD_CORE_DIR}")"/gcc/${GCC_VERSION[1]}"
+SPACK_LMOD_MODULES_DIR=$(find "$SPACK_ROOT/share/spack/lmod" -path "*gcc/${GCC_VERSION[1]}")
 SPACK_LMOD_BASH_INIT=$(${SPACK_EXE} location -i lmod)/lmod/lmod/init/bash
 
 

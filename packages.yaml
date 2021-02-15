@@ -1,7 +1,7 @@
 packages:
   all:
     compiler: [gcc@8.4.0]
-    target: [broadwell, ivybridge]
+    target: [ivybridge]
   cairo:
     variants: -X+pdf
   clapack:
