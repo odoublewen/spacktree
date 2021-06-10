@@ -44,7 +44,7 @@ py-cutadapt@2.10
 py-atropos@1.1.22
 ## non pinned packages (we want the shiny new one :)
 bc
-direnv
+#direnv
 entrezdirect
 git
 htop
